@@ -1,4 +1,3 @@
-
 const { response } = require('express')
 const express = require('express')
 const uuid = require('uuid')
@@ -31,12 +30,18 @@ app.get('/users', (request, response) => {
 
 
 app.post('/users', (request, response) => {
+    
+    try {  
     const { name, age } = request.body
     const user = { id: uuid.v4(), name, age }
-
+    
     users.push(user)
 
     return response.status(201).json(user)
+}
+    catch (err) {
+        return response.status(500).json({error: err.message})
+    }
 })
 
 
